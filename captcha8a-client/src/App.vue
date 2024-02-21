@@ -17,6 +17,8 @@
 <script>
 import { WidgetInstance } from "friendly-challenge";
 import { ref } from "vue";
+
+import CaptchaService from "./services/CaptchaService";
 export default {
   data() {
     return {
@@ -28,9 +30,12 @@ export default {
     };
   },
   methods: {
+    async verifyCaptcha(solution) {
+      const response = await CaptchaService.verificarCaptcha(solution);
+      console.log(response);
+    },
     doneCallback(solution) {
-      console.log("CAPTCHA completed succesfully, solution:", solution);
-      // ... Do something with the solution, maybe use it in a request
+      this.verifyCaptcha(solution);
     },
     errorCallback(err) {
       console.log("There was an error when trying to solve the Captcha.");
